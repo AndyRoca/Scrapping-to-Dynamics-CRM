@@ -15,6 +15,19 @@ namespace ObtenerDatosBlog.Infrastructure.Repositorys
             return new List<string>(archivosPDF);
         }
 
+        public (string, string)[] ObtenerRutasPdfEnCarpetas(string rutaCarpeta)
+        {
+            var archivosPDF = new List<(string, string)>();
+
+            foreach (var filePath in Directory.GetFiles(rutaCarpeta, "*.pdf", SearchOption.AllDirectories))
+            {
+                var fileName = Path.GetFileName(filePath);
+                archivosPDF.Add((fileName, filePath));
+            }
+
+            return archivosPDF.ToArray();
+        }
+
         public string FormatearRutas(string ruta)
         {               
             int indexKBs = ruta.IndexOf("KBs");
