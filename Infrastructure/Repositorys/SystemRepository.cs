@@ -9,13 +9,15 @@ namespace ObtenerDatosBlog.Infrastructure.Repositorys
 {
     public class SystemRepository : ISystemRepository
     {
-        public List<string> ObtenerRutasPDF(string carpeta)
+        public List<string> ObtenerPDF(string carpeta)
         {
-            string[] archivosPDF = Directory.GetFiles(carpeta, "*.pdf");
+            string[] archivosPDF = Directory.GetFiles(carpeta, "*.pdf", SearchOption.AllDirectories)
+                                   .Concat(Directory.GetFiles(carpeta, "*.PDF", SearchOption.AllDirectories))
+                                   .ToArray();
             return new List<string>(archivosPDF);
         }
 
-        public (string, string)[] ObtenerRutasPdfEnCarpetas(string rutaCarpeta)
+        public (string, string)[] ObtenerNombresyRutasPdfEnCarpetas(string rutaCarpeta)
         {
             var archivosPDF = new List<(string, string)>();
 
@@ -41,9 +43,9 @@ namespace ObtenerDatosBlog.Infrastructure.Repositorys
             return Path.GetFileNameWithoutExtension(archivosPDF);
         }
 
-        public void ConvertirEnTxtContenido(string contenido, string titulo)
+        public void ConvertirEnTxtContenido(string contenido, string titulo, string rutaRaiz)
         {
-            using (StreamWriter writer = new StreamWriter(@$"C:\Proyectos\AC\TxtContenidos\{ titulo }.txt", append: true))
+            using (StreamWriter writer = new StreamWriter(@$"{ rutaRaiz }\{ titulo }.txt", append: true))
             {
                 writer.WriteLine(contenido);
             }

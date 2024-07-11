@@ -8,10 +8,10 @@ namespace ObtenerDatosBlog.Domain.IRepository
 {
     public interface ISystemRepository
     {
-        public List<string> ObtenerRutasPDF(string carpeta);
-        public (string, string)[] ObtenerRutasPdfEnCarpetas(string rutaCarpeta);
+        public List<string> ObtenerPDF(string carpeta);
+        public (string, string)[] ObtenerNombresyRutasPdfEnCarpetas(string rutaCarpeta);
         public string FormatearRutas(string rutas);
         public string ObtenerNombresPDF(string archivosPDF);
-        public void ConvertirEnTxtContenido(string contenido, string titulo);
+        public void ConvertirEnTxtContenido(string rutaRaiz, string contenido, string titulo);
     }
 }

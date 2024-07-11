@@ -6,7 +6,7 @@ namespace ObtenerDatosBlog.Infrastructure.Repositorys
 {
     public class ExcelRepository : IExcelRepository
     {        
-        public void CrearExcelDeUnaColumna(List<string> Urls, int i, string header, string excelResultado, string excelHoja)
+        public void CrearExcelDeUnaColumna(List<string> datos, int i, string header, string excelResultado, string excelHoja)
         {
             if (i == 0)
             {
@@ -23,16 +23,16 @@ namespace ObtenerDatosBlog.Infrastructure.Repositorys
                 var worksheet = workbook.Worksheet($"{ excelHoja }");
                 int lastRow = worksheet.LastRowUsed().RowNumber();
 
-                foreach (var url in Urls)
+                foreach (var dato in datos)
                 {
                     if (worksheet.Cell(lastRow + 1, 1).IsEmpty())
                     {
-                        worksheet.Cell(lastRow + 1, 1).Value = url;
+                        worksheet.Cell(lastRow + 1, 1).Value = dato;
                     }
                     else
                     {
                         worksheet.Row(lastRow + 1).InsertRowsAbove(1);
-                        worksheet.Cell(lastRow + 1, 1).Value = url;
+                        worksheet.Cell(lastRow + 1, 1).Value = dato;
                     }
                     lastRow++;
 

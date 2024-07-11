@@ -17,6 +17,7 @@ namespace ObtenerDatosBlog.Domain.UseCases
 
         public void Invoke()
         {
+            var rutaRaiz = "C:\\Proyectos\\AC\\TxtContenidos";
             var archivoExcel = "RutasCarpetas.xlsx";
             var excelResultado = "DatosPdfs.xlsx";
             var excelHoja = "KnowledgeBases";
@@ -25,7 +26,7 @@ namespace ObtenerDatosBlog.Domain.UseCases
 
             for (int i = 0; i < RutasCarpetas.Count; i++)
             {
-                var rutasPdf = _systemRepository.ObtenerRutasPDF(RutasCarpetas[i]);
+                var rutasPdf = _systemRepository.ObtenerPDF(RutasCarpetas[i]);
 
                 if(rutasPdf.Count != 0)
                 {
@@ -35,7 +36,7 @@ namespace ObtenerDatosBlog.Domain.UseCases
                         string contenido = _pdfRepository.ObtenerContenidoPdf(rutasPdf[j]);
                         string keywords = _systemRepository.FormatearRutas(rutasPdf[j]);
 
-                        _systemRepository.ConvertirEnTxtContenido(contenido, titulo);
+                        _systemRepository.ConvertirEnTxtContenido(rutaRaiz, contenido, titulo);
                         _excelRepository.CrearExcelKnowledgeBasesSinContenido(titulo, keywords, excelHoja, excelResultado);
                     }
                     Console.WriteLine(i);
